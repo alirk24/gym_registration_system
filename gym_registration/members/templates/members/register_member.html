@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<h1 class="mb-4 text-center">ثبت عضو جدید</h1>
+<form method="post" class="bg-white p-4 shadow rounded">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="id_name" class="form-label">نام</label>
+            {{ form.name|add_class:"form-control" }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="id_LastName" class="form-label">نام خانوادگی</label>
+            {{ form.LastName|add_class:"form-control" }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="id_phone" class="form-label">تلفن</label>
+            {{ form.phone|add_class:"form-control" }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="id_gender" class="form-label">جنسیت</label>
+            {{ form.gender|add_class:"form-select" }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="id_date_of_birth" class="form-label">تاریخ تولد</label>
+            {{ form.date_of_birth|add_class:"form-control jalali_date-input" }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="id_registration_date" class="form-label">تاریخ ثبت‌نام</label>
+            {{ form.registration_date|add_class:"form-control jalali_date-input" }}
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="id_MembershipPlan" class="form-label">پلن عضویت</label>
+        {{ form.MembershipPlan|add_class:"form-select" }}
+    </div>
+    <button type="submit" class="btn btn-success w-100">ثبت</button>
+</form>
+{% endblock %}

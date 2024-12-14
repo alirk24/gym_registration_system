@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>لیست اعضا باشگاه اکسیژن</h1>
+    <a href="{% url 'register_member' %}" class="btn btn-primary">ثبت عضو جدید</a>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    <a href="?sort_by=name&sort_order={% if sort_by == 'name' and sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="text-white">
+                        نام
+                        {% if sort_by == 'name' %}
+                            {% if sort_order == 'asc' %}
+                                ↑
+                            {% else %}
+                                ↓
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=LastName&sort_order={% if sort_by == 'LastName' and sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="text-white">
+                        نام خانوادگی
+                        {% if sort_by == 'LastName' %}
+                            {% if sort_order == 'asc' %}
+                                ↑
+                            {% else %}
+                                ↓
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=phone&sort_order={% if sort_by == 'phone' and sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="text-white">
+                        تلفن
+                        {% if sort_by == 'phone' %}
+                            {% if sort_order == 'asc' %}
+                                ↑
+                            {% else %}
+                                ↓
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=gender&sort_order={% if sort_by == 'gender' and sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="text-white">
+                        جنسیت
+                        {% if sort_by == 'gender' %}
+                            {% if sort_order == 'asc' %}
+                                ↑
+                            {% else %}
+                                ↓
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=registration_date&sort_order={% if sort_by == 'registration_date' and sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="text-white">
+                        تاریخ ثبت‌نام
+                        {% if sort_by == 'registration_date' %}
+                            {% if sort_order == 'asc' %}
+                                ↑
+                            {% else %}
+                                ↓
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?sort_by=remaining_days&sort_order={% if sort_by == 'remaining_days' and sort_order == 'asc' %}desc{% else %}asc{% endif %}" class="text-white">
+                        روزهای باقی‌مانده
+                        {% if sort_by == 'remaining_days' %}
+                            {% if sort_order == 'asc' %}
+                                ↑
+                            {% else %}
+                                ↓
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.name }}</td>
+                <td>{{ member.LastName }}</td>
+                <td>{{ member.phone }}</td>
+                <td>{{ member.get_gender_display }}</td>
+                <td>{{ member.registration_date_jalali }}</td>
+                <td>{{ member.remaining_days }}</td>
+                <td>
+                    <a href="{% url 'edit_member' member.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                    <a href="{% url 'extend_membership' member.id %}" class="btn btn-success btn-sm">تمدید</a>
+                    <form action="{% url 'delete_member' member.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
