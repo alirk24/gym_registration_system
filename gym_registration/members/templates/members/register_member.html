@@ -3,8 +3,17 @@
 
 {% block content %}
 <h1 class="mb-4 text-center">ثبت عضو جدید</h1>
-<form method="post" class="bg-white p-4 shadow rounded">
+<form method="post" action="{% url 'register_member' %}" class="bg-white p-4 shadow rounded">
     {% csrf_token %}
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    <li>{{ field }}: {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-6 mb-3">
             <label for="id_name" class="form-label">نام</label>

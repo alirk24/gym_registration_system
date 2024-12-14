@@ -13,7 +13,9 @@ def register_member(request):
         form = MemberRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('member_list')
+            return redirect('member_list')  # Redirect to the member list after successful submission
+        else:
+            print(form.errors)  # Log any validation errors for debugging
     else:
         form = MemberRegistrationForm()
     return render(request, 'members/register_member.html', {'form': form})
